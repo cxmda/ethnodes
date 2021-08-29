@@ -1,0 +1,43 @@
+     /**
+     * 交易通知：平台管理员用户给用户发消息
+     * @param sender
+     * @param reciverId
+     * @param msg
+     * @throws IOException
+     */
+    public void sendTransactionNotice(RocketChatClientCallBuilder sender, String reciverId, String msg) throws IOException {
+        RocketChatRestApiV1Chat rocketChat = new RocketChatRestApiV1Chat(sender);
+        Room room = new Room(reciverId, false);
+        Message message = new Message(msg);
+        rocketChat.postMessage(room, message);
+    }
+
+    /**
+     * 平台通知：管理员给频道发消息，频道内所有用户都能收到消息
+     * @param sender
+     * @param channelName
+     * @param msg
+     * @throws IOException
+     */
+    public void sendPlatformNotice(RocketChatClientCallBuilder sender, String channelName, String msg) throws IOException {
+        RocketChatRestApiV1Chat rocketChat = new RocketChatRestApiV1Chat(sender);
+        Room room = new Room(channelName, false);
+        Message message = new Message(msg);
+        rocketChat.postMessage(room, message);
+    }
+
+    /**
+     * 私聊
+     * @param senderName
+     * @param senderPwd
+     * @param reciverId
+     * @param msg
+     * @throws IOException
+     */
+    public void privateChat(String senderName, String senderPwd, String reciverId, String msg) throws IOException {
+        RocketChatClientCallBuilder builder = new RocketChatClientCallBuilder(TestConnectionInfo.ServerUrl, senderName, senderPwd);
+        RocketChatRestApiV1Chat rocketChat = new RocketChatRestApiV1Chat(builder);
+        Room room = new Room(reciverId, false);
+        Message message = new Message(msg);
+        rocketChat.postMessage(room, message);
+    }
